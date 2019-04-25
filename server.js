@@ -1,5 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose');
+
 const bodyParser = require('body-parser');
 
 
@@ -26,15 +26,5 @@ app.post('/articles',(req,res) => {
    
 });
 
-mongoose.connect('mongodb://localhost/news');
-let db = mongoose.connection;
 
-// Check for Db errors
-db.on('error', (err) => console.log(err))
-
-// check connection
-db.once('open', () =>  {
-    console.log("connected to mongodb")
-    app.listen(3000,() => console.log("server running at 3000"));
-})
 
