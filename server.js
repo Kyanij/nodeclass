@@ -9,6 +9,27 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const users = [
+    {
+        id:1,
+        name:"ken",
+        age:24
+    },
+    {
+        id:2,
+        name:"Haryy",
+        age:22
+    }
+];
+
+app.get('/users/:id', (req,res) => {
+    const id = req.params.id;
+    let user = users.filter((user) => user.id == id);
+    res.send(user);
+});
+
+
+
 // routes
 app.get('/articles',(req,res) => {
     Article.find(function(err, articlesList) {
@@ -23,6 +44,22 @@ app.post('/articles',(req,res) => {
     Article.create(data, (err,createData)=> {
         if(err) res.send({error: err.message})
         res.send(createData)
+    })
+});
+
+app.get('/articles/:id', (req,res) => {
+    let id = req.params.id;
+    Article.findById(id,(err,article) => {
+        if(err) res.send({error:err.message})
+        res.send(article);
+    })
+});
+
+app.put('/articles/edit/:id', (req,res) => {
+    let id = req.params.id;
+    Article.findByIdAndUpdate(id,{author:"Kyanij Maharjan"}, (err,updateArticle)=> {
+        if(err) res.send({error:error.message})
+        res.send("Succesfully updated");
     })
 });
 
