@@ -1,11 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const db = require('./db');
+
 let Article = require('./models/article');
 
 const app = express();
 
 app.use(bodyParser.json());
+
+// routes
 app.get('/articles',(req,res) => {
     Article.find(function(err, articlesList) {
         if(err) res.send({error: err.message})
@@ -20,7 +24,6 @@ app.post('/articles',(req,res) => {
         if(err) res.send({error: err.message})
         res.send(createData)
     })
-     
 });
 
 // Check for Db errors
