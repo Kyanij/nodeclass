@@ -9,28 +9,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const users = [
-    {
-        id:1,
-        name:"ken",
-        age:24
-    },
-    {
-        id:2,
-        name:"Haryy",
-        age:22
-    }
-];
-
-app.get('/users/:id', (req,res) => {
-    const id = req.params.id;
-    let user = users.filter((user) => user.id == id);
-    res.send(user);
-});
-
-
-
-// routes
+// Routes
 app.get('/articles',(req,res) => {
     Article.find(function(err, articlesList) {
         if(err) res.send({error: err.message})
@@ -39,7 +18,6 @@ app.get('/articles',(req,res) => {
 });
 
 app.post('/articles',(req,res) => {
-    console.log(req.body);
     const data = req.body;
     Article.create(data, (err,createData)=> {
         if(err) res.send({error: err.message})
@@ -55,11 +33,12 @@ app.get('/articles/:id', (req,res) => {
     })
 });
 
-app.put('/articles/edit/:id', (req,res) => {
+app.put('/articles/:id', (req,res) => {
     let id = req.params.id;
-    Article.findByIdAndUpdate(id,{author:"Kyanij Maharjan"}, (err,updateArticle)=> {
+    let data = req.body;
+    Article.findByIdAndUpdate(id, data, (err, updateArticle)=> {
         if(err) res.send({error:error.message})
-        res.send("Succesfully updated");
+        res.json(updateArticle);
     })
 });
 
