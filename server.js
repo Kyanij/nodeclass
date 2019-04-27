@@ -7,9 +7,17 @@ let Article = require('./models/article');
 
 const app = express();
 
+// Pug Template
+app.set('views', './views')
+app.set('view engine', 'pug');
+
 app.use(bodyParser.json());
 
 // routes
+app.get('/',(req,res) => {
+    res.render('index', {title:'Template', message:"hello there"});
+});
+
 app.get('/articles',(req,res) => {
     Article.find(function(err, articlesList) {
         if(err) res.send({error: err.message})
