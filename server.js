@@ -1,9 +1,6 @@
 const express = require('express');
-
 const bodyParser = require('body-parser');
-
-
-
+const db = require('./db');
 let Article = require('./models/article');
 
 const app = express();
@@ -23,8 +20,21 @@ app.post('/articles',(req,res) => {
         if(err) res.send({error: err.message})
         res.send(createData)
     })
-   
+     
 });
+
+// Check for Db errors
+db.on('error', (err) => console.log(err))
+
+// check connection
+db.once('open', () =>  {
+    console.log("connected to mongodb")
+    app.listen(3000,() => console.log("server running at 3000"));
+})
+
+
+
+
 
 
 
