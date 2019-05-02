@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const route = require('./routes/route');
 
 const db = require('./db');
-
 const app = express();
 
 app.use(route);
@@ -14,7 +13,6 @@ app.set('views', './views')
 app.set('view engine', 'pug');
 
 app.use(bodyParser.json());
-
 
 // Check for Db errors
 db.on('error', (err) => console.log(err))
