@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// routes
+// Routes
 app.get('/articles',(req,res) => {
     Article.find(function(err, articlesList) {
         if(err) res.send({error: err.message})
@@ -18,11 +18,27 @@ app.get('/articles',(req,res) => {
 });
 
 app.post('/articles',(req,res) => {
-    console.log(req.body);
     const data = req.body;
     Article.create(data, (err,createData)=> {
         if(err) res.send({error: err.message})
         res.send(createData)
+    })
+});
+
+app.get('/articles/:id', (req,res) => {
+    let id = req.params.id;
+    Article.findById(id,(err,article) => {
+        if(err) res.send({error:err.message})
+        res.send(article);
+    })
+});
+
+app.put('/articles/:id', (req,res) => {
+    let id = req.params.id;
+    let data = req.body;
+    Article.findByIdAndUpdate(id, data, (err, updateArticle)=> {
+        if(err) res.send({error:error.message})
+        res.json(updateArticle);
     })
 });
 
